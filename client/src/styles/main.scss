@@ -1,0 +1,17 @@
+@import 'variables';
+@import 'bootstrap/scss/bootstrap';
+
+body {
+  font-family: 'Graphik', 'Inter', sans-serif;
+  background-color: $color-white;
+  color: $color-black;
+}
+
+a {
+  color: $color-blue;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-blue-dark;
+  }
+}
