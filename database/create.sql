@@ -1,0 +1,32 @@
+CREATE DATABASE IF NOT EXISTS trouve_ton_artisan
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE trouve_ton_artisan;
+
+CREATE TABLE categories (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nom VARCHAR(100) NOT NULL,
+  slug VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE specialites (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nom VARCHAR(100) NOT NULL,
+  categorie_id INT UNSIGNED NOT NULL,
+  FOREIGN KEY (categorie_id) REFERENCES categories(id)
+);
+
+CREATE TABLE artisans (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nom VARCHAR(150) NOT NULL,
+  note DECIMAL(2,1) NOT NULL,
+  localisation VARCHAR(150) NOT NULL,
+  apropos TEXT,
+  email VARCHAR(150) NOT NULL,
+  site_web VARCHAR(255),
+  photo VARCHAR(255),
+  top BOOLEAN NOT NULL DEFAULT FALSE,
+  specialite_id INT UNSIGNED NOT NULL,
+  FOREIGN KEY (specialite_id) REFERENCES specialites(id)
+);
