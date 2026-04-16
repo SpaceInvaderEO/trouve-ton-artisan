@@ -2,16 +2,86 @@
 @import 'bootstrap/scss/bootstrap';
 
 body {
-  font-family: 'Graphik', 'Inter', sans-serif;
-  background-color: $color-white;
+  font-family: $font-family-base;
+  background-color: #f8fafd;
   color: $color-black;
+  line-height: 1.6;
 }
 
-a {
-  color: $color-blue;
-  text-decoration: none;
+.text-primary { color: $color-blue !important; }
+.bg-primary { background-color: $color-blue !important; }
 
+.artisan-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  
   &:hover {
-    color: $color-blue-dark;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+.step-card {
+  border: 1px solid rgba($color-blue, 0.1);
+  background: white;
+  
+  .step-number {
+    width: 40px;
+    height: 40px;
+    background: $color-blue;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin: 0 auto;
+  }
+}
+
+.navbar {
+  .nav-link {
+    transition: color 0.2s ease;
+    
+    &.active {
+      color: $color-blue !important;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 1rem;
+        right: 1rem;
+        height: 3px;
+        background-color: $color-blue;
+        border-radius: 3px 3px 0 0;
+      }
+    }
+  }
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
+.hover-opacity-100:hover {
+  opacity: 1 !important;
+}
+
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-primary {
+  background-color: $color-blue;
+  border-color: $color-blue;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  
+  &:hover {
+    background-color: $color-blue-dark;
+    border-color: $color-blue-dark;
   }
 }

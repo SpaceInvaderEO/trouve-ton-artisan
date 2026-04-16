@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+const artisanRoutes = require('./routes/artisanRoutes');
+const categorieRoutes = require('./routes/categorieRoutes');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -15,12 +18,14 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'API Trouve ton artisan opérationnelle' });
 });
 
+app.use('/api/artisans', artisanRoutes);
+app.use('/api/categories', categorieRoutes);
+
 app.use((req, res) => {
   res.status(404).json({ error: 'Route non trouvée' });
 });
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
   res.status(500).json({ error: 'Erreur serveur interne' });
 });
 

@@ -1,30 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Header() {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
 
-  const categories = [
-    { id: 1, nom: 'Bâtiment', slug: 'batiment' },
-    { id: 2, nom: 'Services', slug: 'services' },
-    { id: 3, nom: 'Fabrication', slug: 'fabrication' },
-    { id: 4, nom: 'Alimentation', slug: 'alimentation' },
-  ];
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/categories`);
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Erreur fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const query = e.target.search.value.trim();
     if (query) {
       navigate(`/recherche?q=${encodeURIComponent(query)}`);
+      e.target.reset();
     }
   };
 
   return (
-    <header>
-      <nav className="navbar navbar-expand-lg">
+    <header className="sticky-top bg-white border-bottom shadow-sm">
+      <nav className="navbar navbar-expand-lg py-3">
         <div className="container">
-          <Link className="navbar-brand" to="/" aria-label="Trouve ton artisan - Accueil">
-            <span className="fw-bold">Trouve ton artisan</span>
+          <Link className="navbar-brand d-flex align-items-center" to="/" aria-label="Trouve ton artisan - Accueil">
+            <img src="/logo.png" alt="Logo" height="50" className="me-2" />
           </Link>
 
           <button
@@ -44,7 +52,7 @@ function Header() {
               {categories.map((cat) => (
                 <li className="nav-item" key={cat.id}>
                   <NavLink
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    className={({ isActive }) => `nav-link px-3 ${isActive ? 'active text-primary fw-bold' : ''}`}
                     to={`/categorie/${cat.slug}`}
                   >
                     {cat.nom}
@@ -53,16 +61,17 @@ function Header() {
               ))}
             </ul>
 
-            <form className="d-flex" role="search" onSubmit={handleSearch}>
+            <form className="d-flex position-relative" role="search" onSubmit={handleSearch}>
               <input
-                className="form-control me-2"
+                className="form-control rounded-pill ps-4 pe-5"
                 type="search"
                 name="search"
-                placeholder="Rechercher un artisan..."
+                placeholder="Rechercher par nom..."
                 aria-label="Rechercher un artisan"
+                style={{ width: '250px' }}
               />
-              <button className="btn btn-primary" type="submit">
-                Rechercher
+              <button className="btn btn-primary rounded-circle position-absolute end-0 top-0 h-100" type="submit" style={{ borderRadius: '0 50px 50px 0' }}>
+                <i className="bi bi-search"></i>
               </button>
             </form>
           </div>
