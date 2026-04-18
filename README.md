@@ -3,6 +3,13 @@
 Projet réalisé dans le cadre du titre professionnel Développeur Web (CEF).  
 L'idée : une plateforme pour que les habitants de la région Auvergne-Rhône-Alpes puissent trouver un artisan facilement et le contacter en quelques clics.
 
+Ce projet mobilise la quasi-totalité des connaissances et compétences acquises. Plus particulièrement, les modules :
+- Utiliser l'outil de maquettage FIGMA
+- Coder Responsive Design avec React.JS
+- Mettre en place une API REST avec Express
+- Les bases de données relationnelles
+- Gérer une base de données relationnelle avec MySQL
+
 ---
 
 ## C'est quoi exactement ?
@@ -42,77 +49,74 @@ Avant de lancer quoi que ce soit, il faut avoir sur sa machine :
 
 ---
 
-## Installation
+## 🛠️ Installation (pas à pas)
 
-### 1. Cloner le repo
+Pour que tout roule, je te conseille de suivre cet ordre. C'est assez rapide !
 
+### 1. On récupère le projet
 ```bash
 git clone https://github.com/ton-pseudo/trouve-ton-artisan.git
 cd trouve-ton-artisan
 ```
 
-### 2. Installer les dépendances du frontend
-
+### 2. Le côté client (Front)
 ```bash
 cd client
 npm install
 ```
 
-### 3. Installer les dépendances du backend
-
+### 3. Le côté serveur (API)
 ```bash
 cd ../server
 npm install
 ```
 
-### 4. Configurer la base de données
+### 4. La base de données (le plus important !)
+Il faut d'abord créer une base de données MySQL vide, par exemple appelée `trouve_ton_artisan`. 
+Ensuite, tu trouveras les scripts dans le dossier `database/`. Importe-les dans cet ordre :
+1. `create.sql` (pour créer les tables)
+2. `seed.sql` (pour remplir avec les données de test)
 
-Créer une base de données MySQL nommée `trouve_ton_artisan`, puis importer les scripts SQL dans cet ordre :
-
+*Astuce : Si tu es en ligne de commande :*
 ```bash 
 mysql -u root -p trouve_ton_artisan < database/create.sql
- 
 mysql -u root -p trouve_ton_artisan < database/seed.sql
 ```
 
-### 5. Configurer les variables d'environnement
-
-Dans le dossier `server/`, copier le fichier `.env.example` en `.env` et remplir les valeurs :
-
+### 5. Les variables d'environnement
+Dans le dossier `server/`, j'ai laissé un fichier `.env.example`. 
+Fais-en une copie nommée `.env` et ajuste tes accès MySQL (le mot de passe surtout) :
 ```bash
 cp .env.example .env
 ```
 
-```env
-PORT=3001
-CLIENT_URL=http://localhost:5173
-
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=trouve_ton_artisan
-DB_USER=root
-DB_PASSWORD=ton_mot_de_passe
-```
-
 ---
 
-## Lancer le projet en local
+## 🚀 Lancement
 
-Il faut deux terminaux ouverts en parallèle.
+Une fois que c'est installé, c'est parti. Il faut lancer deux terminaux :
 
-**Terminal 1 — le serveur API :**
+**Terminal 1 — Le serveur API :**
 ```bash
 cd server
 npm run dev
 ```
-L'API tourne sur `http://localhost:3001`
 
-**Terminal 2 — le frontend React :**
+**Terminal 2 — L'interface React :**
 ```bash
 cd client
 npm run dev
 ```
-Le site est accessible sur `http://localhost:5173`
+
+Normalement, tu pourras voir le site sur `http://localhost:5173` !
+
+---
+
+## 💡 Petit coup de pouce (Troubleshooting)
+Si jamais tu as un souci au lancement :
+- **Problème de BDD** : Vérifie bien que les accès dans ton `.env` correspondent à ton serveur local (WAMP/XAMPP/MAMP).
+- **Port déjà utilisé** : Si le port 3001 est pris, tu peux le changer dans le `.env`, mais n'oublie pas de mettre à jour l'URL côté client si besoin.
+- **Node.js** : J'ai utilisé la version 18, si tu as une version plus ancienne, il se peut que Vite râle un peu.
 
 ---
 
